@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 export default function Pricing() {
   const [selected, setSelected] = useState(1);
 
+  const whatsappNumber = "6285182517587"; // format internasional (tanpa 0)
+
   const packages = [
     {
       title: "Individual Journey",
@@ -44,6 +46,14 @@ export default function Pricing() {
       ],
     },
   ];
+
+  const handleOrder = (pkg) => {
+    const message = `Halo, saya ingin memesan paket *${pkg.title}* dengan harga mulai dari *${pkg.price}*.`;
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+    window.open(url, "_blank");
+  };
 
   return (
     <section id="pricing" className="py-20 bg-[#0f1115] text-white px-8">
@@ -99,7 +109,13 @@ export default function Pricing() {
               </ul>
 
               {/* Button */}
-              <button className="mt-6 w-full py-3 rounded-xl bg-yellow-400 text-black font-bold hover:bg-yellow-500 transition">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleOrder(p);
+                }}
+                className="mt-6 w-full py-3 rounded-xl bg-yellow-400 text-black font-bold hover:bg-yellow-500 transition"
+              >
                 Pesan Sekarang
               </button>
             </motion.div>
